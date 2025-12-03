@@ -12,4 +12,4 @@ To run with optimizations:
 
 To run the tests for a day:
 
-`zig build test -Day=2`
+`zig test src/day01.zig`
