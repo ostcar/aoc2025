@@ -17,6 +17,13 @@ const day_input = blk: {
 };
 
 pub fn main() !void {
-    std.debug.print("Part 1: {}\n", .{try day.p1(day_input)});
-    std.debug.print("Part 2: {}\n", .{try day.p2(day_input)});
+    const p1_start = std.time.milliTimestamp();
+    const p1_solution = try day.p1(day_input);
+    const p1_duration = std.time.milliTimestamp() - p1_start;
+    std.debug.print("Part 1 ({} ms): {}\n", .{ p1_duration, p1_solution });
+
+    const p2_start = std.time.milliTimestamp();
+    const p2_solution = try day.p2(day_input);
+    const p2_duration = std.time.milliTimestamp() - p2_start;
+    std.debug.print("Part 2 ({} ms): {}\n", .{ p2_duration, p2_solution });
 }
