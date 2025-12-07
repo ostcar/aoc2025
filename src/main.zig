@@ -8,6 +8,7 @@ const day = switch (build_options.selected_day) {
     4 => @import("day04.zig"),
     5 => @import("day05.zig"),
     6 => @import("day06.zig"),
+    7 => @import("day07.zig"),
     else => @compileError("Day not implemented"),
 };
 
@@ -18,7 +19,7 @@ const day_input = blk: {
 
 pub fn main() !void {
     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-    defer _ = gpa.deinit();
+    defer std.debug.assert(gpa.deinit() == .ok);
     const allocator = gpa.allocator();
 
     const p1_start = std.time.milliTimestamp();
