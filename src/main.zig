@@ -17,13 +17,29 @@ const day_input = blk: {
 };
 
 pub fn main() !void {
+    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+    defer _ = gpa.deinit();
+    const allocator = gpa.allocator();
+
     const p1_start = std.time.milliTimestamp();
-    const p1_solution = try day.p1(day_input);
+    const p1_solution = try callP(day.p1, allocator, day_input);
     const p1_duration = std.time.milliTimestamp() - p1_start;
     std.debug.print("Part 1 ({} ms): {}\n", .{ p1_duration, p1_solution });
 
     const p2_start = std.time.milliTimestamp();
-    const p2_solution = try day.p2(day_input);
+    const p2_solution = try callP(day.p2, allocator, day_input);
     const p2_duration = std.time.milliTimestamp() - p2_start;
     std.debug.print("Part 2 ({} ms): {}\n", .{ p2_duration, p2_solution });
+}
+
+fn callP(comptime function: anytype, allocator: std.mem.Allocator, input: []const u8) !u64 {
+    if (comptime needsAllocator(function)) {
+        return function(allocator, input);
+    } else {
+        return function(input);
+    }
+}
+
+fn needsAllocator(comptime func: anytype) bool {
+    return @typeInfo(@TypeOf(func)).@"fn".params[0].type == std.mem.Allocator;
 }
