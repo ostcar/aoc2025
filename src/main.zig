@@ -9,6 +9,7 @@ const day = switch (build_options.selected_day) {
     5 => @import("day05.zig"),
     6 => @import("day06.zig"),
     7 => @import("day07.zig"),
+    9 => @import("day09.zig"),
     else => @compileError("Day not implemented"),
 };
 
